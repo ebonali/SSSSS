@@ -1,0 +1,34 @@
+{
+  "title": "Contact Info Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "url": {
+      "title": "Single URL",
+      "type": "string",
+      "description": "A single website URL to scrape (e.g. https://example.com). The scraper will crawl up to 60 pages on the domain to find contact info.",
+      "editor": "textfield",
+      "prefill": "https://example.com"
+    },
+    "urls": {
+      "title": "Multiple URLs",
+      "type": "array",
+      "description": "Batch mode — provide up to 100 URLs. Each URL is crawled independently.",
+      "editor": "stringList"
+    },
+    "extract_only": {
+      "title": "Extract only",
+      "type": "array",
+      "description": "Optional filter. Leave empty to extract everything, or select specific fields.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": ["email", "phone", "social_links"]
+      }
+    }
+  },
+  "oneOf": [
+    { "required": ["url"] },
+    { "required": ["urls"] }
+  ]
+}
