@@ -266,48 +266,66 @@ def scrape_site(url: str, extract_only=None):
 
     queue = deque([start_url])
     visited = set()
+    in_flight = set()
+    # Add ThreadPoolExecutor
+    import concurrent.futures
 
     found_emails = set()
     found_phones = set()
     found_socials = set()
     found_pages = set()
 
-    while queue and len(visited) < MAX_PAGES_PER_SITE:
-        page_url = queue.popleft()
-        if page_url in visited:
-            continue
-        visited.add(page_url)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        while (queue or in_flight) and len(visited) < MAX_PAGES_PER_SITE:
+            while queue and len(in_flight) < 5 and len(visited) + len(in_flight) < MAX_PAGES_PER_SITE:
+                page_url = queue.popleft()
+                if page_url in visited or any(f[1] == page_url for f in in_flight):
+                    continue
+                future = executor.submit(fetch_html, page_url)
+                in_flight.add((future, page_url))
+                
+            if not in_flight:
+                break
+                
+            done, _ = concurrent.futures.wait(
+                [f[0] for f in in_flight], return_when=concurrent.futures.FIRST_COMPLETED
+            )
+            
+            for f in done:
+                # Find the mapping tuple
+                item = next((x for x in in_flight if x[0] == f), None)
+                if not item: continue
+                in_flight.remove(item)
+                page_url = item[1]
+                visited.add(page_url)
+                
+                try:
+                    html = f.result()
+                except Exception:
+                    continue
+                if not html:
+                    continue
 
-        try:
-            html = fetch_html(page_url)
-        except Exception:
-            continue
-        if not html:
-            continue
+                emails, phones, socials = extract_from_text(html)
+                if emails or phones or socials:
+                    found_pages.add(page_url)
+                found_emails.update(emails)
+                found_phones.update(phones)
+                found_socials.update(clean_link(s, page_url) or s for s in socials)
 
-        emails, phones, socials = extract_from_text(html)
-        if emails or phones or socials:
-            found_pages.add(page_url)
-        found_emails.update(emails)
-        found_phones.update(phones)
-        found_socials.update(clean_link(s, page_url) or s for s in socials)
+                new_links = discover_links(html, page_url, domain)
+                priority = []
+                normal = []
+                for link in new_links:
+                    if link in visited or any(fl[1] == link for fl in in_flight):
+                        continue
+                    if _is_priority_link(link):
+                        priority.append(link)
+                    else:
+                        normal.append(link)
 
-        new_links = discover_links(html, page_url, domain)
-        # Prioritise contact / about pages so they are crawled first.
-        priority = []
-        normal = []
-        for link in new_links:
-            if link in visited:
-                continue
-            if _is_priority_link(link):
-                priority.append(link)
-            else:
-                normal.append(link)
-
-        # Extend priority links to the LEFT of the queue (preserving discovery order)
-        # so they are visited next in BFS-like fashion but prioritized.
-        queue.extendleft(reversed(priority))
-        queue.extend(normal)
+                queue.extendleft(reversed(priority))
+                queue.extend(normal)
 
     result = {
         "url": start_url,
