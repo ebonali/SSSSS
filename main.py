@@ -74,6 +74,21 @@ async def run_actor() -> None:
                 f"  → emails={len(row['emails'])}, phones={len(row['phones'])}"
             )
 
+        RIDO_LOGO = r"""
+  ____  _     _
+ |  _ \(_) __| | ___
+ | |_) | |/ _` |/ _ \
+ |  _ <| | (_| | (_) |
+ |_| \_\_|\__,_|\___/
+"""
+        print(RIDO_LOGO)
+        
+        import json
+        print("\n✅ Scraping Completed! Here is the output JSON:")
+        print(json.dumps(results, indent=2, ensure_ascii=False))
+        
+        print("\n💡 TIP: You can also click the 'Export' button in the 'Storage' tab to download results as CSV/Excel/JSON.")
+
         if len(results) == 1:
             await Actor.set_value("OUTPUT", results[0])
         else:
