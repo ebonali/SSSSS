@@ -8,6 +8,7 @@
   "meta": {
     "templateId": "python-start"
   },
+  "output": "./output_schema.json",
   "input": "./input_schema.json",
   "dockerfile": "./Dockerfile",
   "storages": {
