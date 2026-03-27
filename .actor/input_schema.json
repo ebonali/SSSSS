@@ -26,9 +26,5 @@
         "enum": ["email", "phone", "social_links"]
       }
     }
-  },
-  "oneOf": [
-    { "required": ["url"] },
-    { "required": ["urls"] }
-  ]
+  }
 }
