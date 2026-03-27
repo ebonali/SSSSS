@@ -11,25 +11,21 @@
     "emails": {
       "type": "array",
       "title": "Extracted Emails",
-      "items": { "type": "string" },
       "template": "{{emails}}"
     },
     "phones": {
       "type": "array",
       "title": "Extracted Phones",
-      "items": { "type": "string" },
       "template": "{{phones}}"
     },
     "linkedin": {
       "type": "array",
       "title": "LinkedIn",
-      "items": { "type": "string" },
       "template": "{{linkedin}}"
     },
     "facebook": {
       "type": "array",
       "title": "Facebook",
-      "items": { "type": "string" },
       "template": "{{facebook}}"
     }
   }
