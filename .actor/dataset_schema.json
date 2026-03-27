@@ -1,6 +1,4 @@
 {
-  "title": "B2B Contact Scraper Output",
-  "type": "object",
   "actorSpecification": 1,
   "views": {
     "overview": {
