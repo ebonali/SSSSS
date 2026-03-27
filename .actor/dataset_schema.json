@@ -2,68 +2,31 @@
   "title": "B2B Contact Scraper Output",
   "type": "object",
   "actorSpecification": 1,
-  "properties": {
-    "url": {
-      "title": "Website URL",
-      "type": "string",
-      "description": "The base URL of the targeted website."
-    },
-    "emails": {
-      "title": "Email Addresses",
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "A list of email addresses found on the site."
-    },
-    "phones": {
-      "title": "Phone Numbers",
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "A list of phone numbers (formatted where possible)."
-    },
-    "linkedin": {
-      "title": "LinkedIn Profiles",
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "Discovered LinkedIn company or personal profiles."
-    },
-    "facebook": {
-      "title": "Facebook Profiles",
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "Discovered Facebook pages."
-    },
-    "twitter": {
-      "title": "Twitter (X) Profiles",
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "Discovered Twitter accounts."
-    },
-    "instagram": {
-      "title": "Instagram Profiles",
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "Discovered Instagram accounts."
-    },
-    "youtube": {
-      "title": "YouTube Channels",
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "tiktok": {
-      "title": "TikTok Profiles",
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "whatsapp": {
-      "title": "WhatsApp Contact Links",
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "found_on_pages": {
-      "title": "Scraped Sub-pages",
-      "type": "array",
-      "items": { "type": "string" },
-      "description": "The internal pages that actually contained the contact info."
+  "views": {
+    "overview": {
+      "title": "Extracted Contacts",
+      "description": "A table showing all extracted emails, phones, and social links.",
+      "transformation": {
+        "fields": [
+          "url",
+          "emails",
+          "phones",
+          "linkedin",
+          "twitter",
+          "facebook",
+          "instagram",
+          "whatsapp",
+          "youtube",
+          "telegram",
+          "tiktok",
+          "viber",
+          "pinterest",
+          "found_on_pages"
+        ]
+      },
+      "display": {
+        "component": "table"
+      }
     }
   }
 }
