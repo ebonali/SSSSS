@@ -9,22 +9,22 @@
       "template": "{{url}}"
     },
     "emails": {
-      "type": "array",
+      "type": "string",
       "title": "Extracted Emails",
       "template": "{{emails}}"
     },
     "phones": {
-      "type": "array",
+      "type": "string",
       "title": "Extracted Phones",
       "template": "{{phones}}"
     },
     "linkedin": {
-      "type": "array",
+      "type": "string",
       "title": "LinkedIn",
       "template": "{{linkedin}}"
     },
     "facebook": {
-      "type": "array",
+      "type": "string",
       "title": "Facebook",
       "template": "{{facebook}}"
     }
