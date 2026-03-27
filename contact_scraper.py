@@ -88,6 +88,7 @@ SOCIAL_HREF_NOISE = (
     "wp-json",
     "xmlrpc.php",
     "/feed/",
+    "/embed/",
 )
 
 PRIORITY_KEYWORDS = ("contact", "about", "impressum", "support", "help", "info")

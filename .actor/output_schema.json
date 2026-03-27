@@ -1,32 +1,17 @@
 {
   "actorOutputSchemaVersion": 1,
-  "title": "B2B Contact Scraper Results",
+  "title": "B2B Contact Scraper Summary",
   "type": "object",
   "properties": {
-    "url": {
+    "status": {
       "type": "string",
-      "title": "Target URL",
-      "template": "{{url}}"
+      "title": "Extraction Status",
+      "template": "Completed Successfully"
     },
-    "emails": {
+    "info": {
       "type": "string",
-      "title": "Extracted Emails",
-      "template": "{{emails}}"
-    },
-    "phones": {
-      "type": "string",
-      "title": "Extracted Phones",
-      "template": "{{phones}}"
-    },
-    "linkedin": {
-      "type": "string",
-      "title": "LinkedIn",
-      "template": "{{linkedin}}"
-    },
-    "facebook": {
-      "type": "string",
-      "title": "Facebook",
-      "template": "{{facebook}}"
+      "title": "Check Storage",
+      "template": "Full details are stored in the 'Dataset' (Storage) tab. Download CSV/JSON from there."
     }
   }
 }
